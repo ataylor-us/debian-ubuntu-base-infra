@@ -18,6 +18,7 @@
     owner: root
     src: config.yaml.j2
   notify: Init local borg repo
+# Idempotent random minute so they dont fire off at once
 - name: Add borgmatic backup & prune job
   when: borgmatic_config is not failed
   become: true
@@ -25,7 +26,7 @@
     day: "*"
     hour: "2,10,18"
     job: borgmatic create prune compact -v -1
-    minute: "15"
+    minute: "{{ 60 | random(seed=inventory_hostname) }}"
     month: "*"
     name: borgmatic create + prune
     user: root
