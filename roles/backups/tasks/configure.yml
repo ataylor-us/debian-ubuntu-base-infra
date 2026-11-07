@@ -23,7 +23,7 @@
   become: true
   ansible.builtin.cron:
     day: "*"
-    hour: "*/6"
+    hour: "2,10,18"
     job: borgmatic create prune compact -v -1
     minute: "15"
     month: "*"
